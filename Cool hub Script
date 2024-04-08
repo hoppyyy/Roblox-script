@@ -1,0 +1,36 @@
+
+print("Welcome to cool hub!")
+
+
+local function doubleNumber(num)
+    return num * 2
+end
+print(doubleNumber(5)) -- Should print 10
+
+
+
+local bladeBall = game.Workspace.BladeBall
+local goal = game.Workspace.Goal
+local score = 0
+
+
+local function resetBladeBall()
+    bladeBall.Position = Vector3.new(0, 10, 0) -- Set the initial position
+    bladeBall.Velocity = Vector3.new() -- Reset velocity
+end
+
+
+local function handleGoal()
+    score = score + 1
+    print("Goal! Score: " .. score)
+    resetBladeBall() -- Reset the ball position
+end
+
+
+local function onTouched(hit)
+    if hit.Name == "BladeBall" then
+        handleGoal()
+    end
+end
+
+goal.Touched:Connect(onTouched)

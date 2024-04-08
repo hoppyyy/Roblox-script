@@ -1,0 +1,50 @@
+-- Blade Ball Game Script with GUI
+
+-- Variables
+local bladeBall = game.Workspace.BladeBall
+local goal = game.Workspace.Goal
+local score = 0
+
+-- Function to reset the Blade Ball's position
+local function resetBladeBall()
+    bladeBall.Position = Vector3.new(0, 10, 0) -- Set the initial position
+    bladeBall.Velocity = Vector3.new() -- Reset velocity
+end
+
+-- Function to handle goal scoring
+local function handleGoal()
+    score = score + 1
+    print("Goal! Score: " .. score)
+    resetBladeBall() -- Reset the ball position
+    -- Update the score display
+    scoreLabel.Text = "Score: " .. score
+end
+
+-- Function to detect when the Blade Ball enters the goal
+local function onTouched(hit)
+    if hit.Name == "BladeBall" then
+        handleGoal()
+    end
+end
+
+-- Connect the onTouched function to the goal's Touched event
+goal.Touched:Connect(onTouched
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 50)
+frame.Position = UDim2.new(0.5, -100, 0, 10)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+local scoreLabel = Instance.new("TextLabel")
+scoreLabel.Size = UDim2.new(1, 0, 1, 0)
+scoreLabel.Position = UDim2.new(0, 0, 0, 0)
+scoreLabel.BackgroundTransparency = 1
+scoreLabel.Text = "Score: 0"
+scoreLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+scoreLabel.TextSize = 20
+scoreLabel.Font = Enum.Font.SourceSansBold
+scoreLabel.Parent = frame
